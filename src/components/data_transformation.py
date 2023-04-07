@@ -74,7 +74,7 @@ class DataTransformation:
                 transformed_test_file_path=self.data_transformation_config.transformed_test_file_path
             )
 
-            logging.info(f"Data Transformation Artifact : {data_transformation_artifact}")
+            #logging.info(f"Data Transformation Artifact : {data_transformation_artifact}")
             return data_transformation_artifact
         except Exception as e:
             raise PhisingException(e,sys)

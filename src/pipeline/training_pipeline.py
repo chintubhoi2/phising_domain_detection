@@ -2,19 +2,22 @@ from src.entity.config_entity import (
     TrainingPipelineConfig,
     DataIngestionConfig,
     DataValidationConfig,
-    DataTransformationConfig
+    DataTransformationConfig,
+    ModelTrainerConfig
     )
     
 from src.entity.artifact_entity import (
     DataIngestionArtifact,
     DataValidationArtifact,
-    DataTransformationArtifact
+    DataTransformationArtifact,
+    ModelTrainerArtifact
     )
 from src.exception import PhisingException
 from src.logger import logging
 from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 import os,sys
 
 
@@ -61,10 +64,24 @@ class TrainingPipeline:
         except Exception as e:
             raise PhisingException(e,sys)
         
+    def start_model_training(self,data_transformation_artifact:DataTransformationArtifact)->ModelTrainerArtifact:
+        try:
+            self.model_trainer_config = ModelTrainerConfig(training_pipeline_config=self.training_pipeline_config)
+            logging.info("starting model trainer")
+            model_trainer = ModelTrainer(model_trainer_config=self.model_trainer_config,
+            data_transformation_artifact=data_transformation_artifact)
+            model_trainer_artifact = model_trainer.initiate_model_trainer()
+            logging.info(f"model training completed artifact : {model_trainer_artifact}")
+            return model_trainer_artifact
+        except Exception as e:
+            raise PhisingException(e,sys)
+
+
     def run_pipeline(self):
         try:
             data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
             data_validation_artifact:DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact:DataTransformationArtifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
+            model_trainer_artifact:ModelTrainerArtifact = self.start_model_training(data_transformation_artifact=data_transformation_artifact)
         except Exception as e:
             raise PhisingException(e,sys)
