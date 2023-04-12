@@ -60,9 +60,9 @@ class ModelTrainer:
                 test_arr[:, -1]
             ) 
 
-            best_params = self.perform_hyper_param_tuning(x_train,y_train)
-            n_estimators = best_params.get('n_estimators')
-            max_depth = best_params.get('max_depth')
+            #best_params = self.perform_hyper_param_tuning(x_train,y_train)
+            n_estimators = 80#best_params.get('n_estimators')
+            max_depth = 1000#best_params.get('max_depth')
 
             model = self.train_model(x_train,y_train,n_estimators,max_depth)
             y_train_pred = model.predict(x_train)
