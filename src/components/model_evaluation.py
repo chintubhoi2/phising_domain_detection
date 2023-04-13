@@ -43,10 +43,10 @@ class ModelEvaluation:
                 model_eval_artifact = ModelEvaluationArtifact(
                     is_model_accepted=is_model_accepted,
                     improved_accuracy=None,
-                    best_model_path=None,
+                    best_model_path=train_model_file_path,
                     trained_model_path=train_model_file_path,
                     train_model_metric_artifact=self.model_trainer_artifact.test_metric_artifact,
-                    best_model_metric_artifact=None)
+                    best_model_metric_artifact=self.model_trainer_artifact.test_metric_artifact)
                 logging.info(f"Model evaluation artifact : {model_eval_artifact}")
                 return model_eval_artifact
         

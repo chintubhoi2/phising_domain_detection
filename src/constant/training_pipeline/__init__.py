@@ -60,3 +60,10 @@ Model Evaluation realted constant
 MODEL_EVALUATION_DIR_NAME: str = "model_evaluation"
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_EVALUATION_REPORT_NAME = "report.yaml"
+
+
+""" 
+Model Pusher related constant
+"""
+MODEL_PUSHER_DIR:str = "model_pusher"
+MODEL_PUSHER_SAVED_MODEL_DIR = SAVED_MODEL_DIR
